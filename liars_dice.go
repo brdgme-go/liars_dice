@@ -115,7 +115,7 @@ func (g *Game) PubRender() string {
 
 func (g *Game) Render(player *int) string {
 	buf := bytes.NewBufferString("")
-	currentBidText := `{{c "gray"}}first bid{{_c}}`
+	currentBidText := render.Fg(render.Grey, "first bid")
 	if g.BidQuantity != 0 {
 		currentBidText = RenderBid(g.BidQuantity, g.BidValue)
 	}
