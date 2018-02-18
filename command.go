@@ -44,7 +44,11 @@ func (g *Game) Parser(player int) brdgme.Parser {
 }
 
 var callParser = brdgme.Map{
-	Parser: brdgme.Token("call"),
+	Parser: brdgme.Doc{
+		Name:   "call",
+		Desc:   "call that the bid is too high",
+		Parser: brdgme.Token("call"),
+	},
 	Func: func(value interface{}) interface{} {
 		return callCommand{}
 	},
@@ -52,14 +56,24 @@ var callParser = brdgme.Map{
 
 var bidParser = brdgme.Map{
 	Parser: brdgme.Chain([]brdgme.Parser{
-		brdgme.Token("bid"),
-		brdgme.AfterSpace(brdgme.Int{
-			Min: &MinBidQuantity,
-		}),
-		brdgme.AfterSpace(brdgme.Int{
-			Min: &MinBidValue,
-			Max: &MaxBidValue,
-		}),
+		brdgme.Doc{
+			Name:   "bid",
+			Desc:   "bid the number of dice under all players' cups",
+			Parser: brdgme.Token("bid"),
+		},
+		brdgme.AfterSpace(brdgme.Doc{
+			Name: "quantity",
+			Desc: "the quantity of dice to bid",
+			Parser: brdgme.Int{
+				Min: &MinBidQuantity,
+			}}),
+		brdgme.AfterSpace(brdgme.Doc{
+			Name: "value",
+			Desc: "the face value of dice to bid, including wild dice (1)",
+			Parser: brdgme.Int{
+				Min: &MinBidValue,
+				Max: &MaxBidValue,
+			}}),
 	}),
 	Func: func(value interface{}) interface{} {
 		values := value.([]interface{})
