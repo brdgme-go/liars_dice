@@ -1,0 +1,19 @@
+language: go
+before_deploy:
+- mkdir lambda
+- go build -o lambda/game cmd/*.go
+- curl https://raw.githubusercontent.com/brdgme/lambda/master/index.js > lambda/index.js
+deploy:
+  provider: lambda
+  function_name: liars-dice
+  region: us-west-2
+  role: arn:aws:iam::161480335654:role/brdgme-game
+  runtime: nodejs6.10
+  handler_name: handler
+  access_key_id:
+    secure: aoROglRGCeoD3c9oyu3DtWA3EauQclimV1oaRBUr39LxGz3fQyVMmbTRh9wdw0GF1pDNqXWWJEgEFk7OEAqUvqDSslHz2xS2tvODW/722Mqa3DguFu1PijWW5kHx1M+r1x3MK2gMPRFLdWcjkkpK0aCUwc5Quhkr8KrC31v9k2WIBhGNWyw/ewjJK32KDpvmasLa5jlVKjPc0dY3wt+PfM4yQLlxA2Qqkqc6JuR57F3i3blsszVpqgSUup3YHTn+HpeT1OxpQ9APlTnt/5093zltl1RUH9gMEmWjQcForX3uNskqT89fnm5eX7C5YnFRCQuH23l517Dh2LzJBfD1BmgPe8Olk1Evw7BKvP93DT0atHZyPhvdiBITwyHRc/l0asVhwyLKb/zutHkTvb8N70U/4RteeKiEB6pnIfvSP3YhkDohSD2zqKYcobs+U0MzUmmpiQLaCKhYYTyOEC1aK/YJEcMa5Tfmlwx2U/SpvcSb6Sz22OuFV15lahaFyIC62uAobnD7X+o9sEWKnea/HoUwDQmGezmWu80PuvMiM/KX4J2rJW4djIO/ZUNpeFfLtkJEtl8GmwsCPc5wN084Fpe/XsZMub7F0tbTHVuDPTV+Z+ViWQzx5DrofBFkeRy6sB95Ovuse4wvFe9SjVLIG2/eDCeHCRmADnTarAmG4/Q=
+  secret_access_key:
+    secure: T/cmpw+r6sE3aRz/xs8MxuBFLJs8teE6RYhdqV3OTeySDgI5yrSS/l6a4gdt5ygvAqRG784UcAurDy62EeQ16cg6XW2ropolVfjx93bytbJocJ3+DuEJFQQYoLuZAns/17oSZ8wNsYmBEj7zLFcsJnRrk1iPxJraZkRYHhMHAKjGXVdjKkCKNQX2q3dwXS22ypfYgzlXP8M2sUYYJfDGeS0zuM/Yxv/gOC+c72m85McK+1ZecN50BUL47fQanJUTc8xRUKggaJvFyqBWL+d5as0KKKKS+qWCs9Dz5XRUDHpppUQ+6Enl0IQ/u5hxVd5nduX0drd4EpdR63hRdk2+pF21Hu1052eDTriBXr4Xxftd1UR3tl+E0djNu2dK0f4R+pgvBuULoUlHkcuw3YIl3LAMI+CxioOLd5wBdrCwbdcC73TenxvxqlgSB4eXdDzdaolJlUz4inLrOXvaN8dHPBLE6h26xN1SlIee5u/9ziXswf1rPqLU2X5XGS5NROpp7au58wnH27/zbrmmJOMzIhsoqRCtxatDL6VyjzGPDNgH5jwaXwz/dwmI6MHRSV2sPL07JCk9YyOuiAQl6j+kkjUPFKWuMShqYmNAJBJY7AO9wKT5juRVxgnStytUion77T/9I0nnGZY7WWfXyFDWJ0xnreJoj5ZlOvfwJra6E5c=
+  publish: true
+  skip_cleanup: true
+  zip: lambda
