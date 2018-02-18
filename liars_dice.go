@@ -189,13 +189,14 @@ func (g *Game) WhoseTurn() []int {
 	return []int{g.CurrentPlayer}
 }
 
-func (g *Game) ActivePlayers() (players []int) {
+func (g *Game) ActivePlayers() []int {
+	players := []int{}
 	for pNum := 0; pNum < g.Players; pNum++ {
 		if len(g.PlayerDice[pNum]) > 0 {
 			players = append(players, pNum)
 		}
 	}
-	return
+	return players
 }
 
 func (g *Game) NextActivePlayer(from int) int {
@@ -206,13 +207,14 @@ func (g *Game) NextActivePlayer(from int) int {
 	return next
 }
 
-func (g *Game) EliminatedPlayerList() (eliminated []int) {
+func (g *Game) EliminatedPlayerList() []int {
+	eliminated := []int{}
 	for pNum := 0; pNum < g.Players; pNum++ {
 		if len(g.PlayerDice[pNum]) == 0 {
 			eliminated = append(eliminated, pNum)
 		}
 	}
-	return
+	return eliminated
 }
 
 func RenderBid(quantity int, value int) string {
