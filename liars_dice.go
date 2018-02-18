@@ -121,13 +121,13 @@ func (g *Game) Render(player *int) string {
 	}
 	buf.WriteString(fmt.Sprintf("Current bid: %s\n", currentBidText))
 	if player != nil && len(g.PlayerDice[*player]) > 0 {
-		buf.WriteString(fmt.Sprintf("Your dice: {{b}}%s{{_b}}\n\n",
-			strings.Join(RenderDice(g.PlayerDice[*player]), " ")))
+		buf.WriteString(fmt.Sprintf("Your dice: %s\n\n",
+			render.Bold(strings.Join(RenderDice(g.PlayerDice[*player]), " "))))
 	}
 	cells := [][]render.Cell{
 		[]render.Cell{
-			render.Cel("{{b}}Player{{_b}}", render.Left),
-			render.Cel("{{b}}Remaining dice{{_b}}", render.Left),
+			render.Cel(render.Bold("Player"), render.Left),
+			render.Cel(render.Bold("Remaining dice"), render.Left),
 		},
 	}
 	for pNum := 0; pNum < g.Players; pNum++ {
